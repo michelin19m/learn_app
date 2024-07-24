@@ -1,0 +1,11 @@
+<h1 class="text-2xl font-bold text-gray-900 mb-4"><%= @part.name %></h1>
+
+<p class="mb-4">
+  <strong class="text-gray-700">Name:</strong>
+  <span class="text-gray-900"><%= @part.name %></span>
+</p>
+
+<div class="flex space-x-4 mb-4">
+  <%= link_to 'Edit', edit_part_path(@part), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
+  <%= link_to 'Back', @part.resource, class: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
+</div>

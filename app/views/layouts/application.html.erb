@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LearnApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <style>
+      html, body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .content-wrapper {
+        flex: 1;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 text-gray-900">
+    <div class="content-wrapper">
+      <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+          <div class="text-2xl font-bold">
+            <%= link_to 'LearnApp', root_path, class: 'text-white' %>
+          </div>
+          <nav>
+            <% if user_signed_in? %>
+              <%= link_to 'Skills', skills_path, class: 'text-white hover:text-gray-200 px-4' %>
+              <%= link_to 'Logout', destroy_user_session_path, data: {turbo_method: :delete}, class: 'text-white hover:text-gray-200 px-4' %>
+            <% else %>
+              <%= link_to 'Login', new_user_session_path, class: 'text-white hover:text-gray-200 px-4' %>
+              <%= link_to 'Sign Up', new_user_registration_path, class: 'text-white hover:text-gray-200 px-4' %>
+            <% end %>
+          </nav>
+        </div>
+      </header>
+
+      <main class="container mx-auto px-4 py-8">
+        <%= yield %>
+      </main>
+    </div>
+
+    <footer class="bg-blue-600 text-white py-4">
+      <div class="container mx-auto px-4 text-center">
+        <p>&copy; <%= Date.today.year %> LearnApp. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

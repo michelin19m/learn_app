@@ -1,0 +1,12 @@
+<h1>Resources for <%= @skill.name %></h1>
+<%= link_to 'Add Resource', new_skill_resource_path(@skill), class: 'btn btn-primary' %>
+<ul>
+  <% @resources.each do |resource| %>
+    <li>
+      <%= link_to resource.name, resource_path(resource) %>
+      <%= link_to 'Edit', edit_resource_path(resource), class: 'btn btn-secondary' %>
+      <%= link_to 'Delete', resource_path(resource), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to 'Back', skill_path(@skill), class: 'btn btn-secondary' %>

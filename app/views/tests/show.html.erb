@@ -1,0 +1,6 @@
+<h1>Test for Part: <%= @test.part.name %></h1>
+
+<p>Scheduled At: <%= @test.scheduled_at %></p>
+
+<%= link_to 'Edit', edit_test_path(@test), class: 'btn btn-secondary' %>
+<%= link_to 'Back', tests_path, class: 'btn btn-secondary' %>
