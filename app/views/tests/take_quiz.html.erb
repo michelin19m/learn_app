@@ -1,0 +1,17 @@
+<h1 class="text-2xl font-bold text-gray-900 mb-4"><%= @test.title %></h1>
+
+<%= form_with url: submit_quiz_test_path(@test), method: :post, local: true do |form| %>
+  <% @test.questions.each_with_index do |question, index| %>
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">
+        <%= "#{index + 1}. #{question.content}" %>
+      </label>
+      <%= text_field_tag "answers[#{question.id}]", nil, class: "block w-full text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" %>
+    </div>
+  <% end %>
+
+  <div class="flex space-x-4">
+    <%= form.submit "Submit Quiz", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+    <%= link_to 'Back', '', class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+<% end %>

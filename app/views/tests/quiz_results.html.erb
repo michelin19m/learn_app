@@ -1,0 +1,12 @@
+<h1 class="text-2xl font-bold text-gray-900 mb-4">Quiz Results</h1>
+
+<% @results.each_with_index do |result, index| %>
+  <div class="mb-4 p-4 <%= result[:correct] == 'true' ? 'bg-green-100' : 'bg-red-100' %>">
+    <p class="font-bold"><%= "#{index + 1}. #{result[:question]}" %></p>
+    <p>Your answer: <%= result[:user_answer] %></p>
+    <p>Correct answer: <%= result[:correct_answer] %></p>
+    <p><%= result[:correct] == 'true' ? 'Correct!' : 'Incorrect' %></p>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Tests', part_tests_path(@test.part), class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>

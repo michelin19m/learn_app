@@ -9,3 +9,26 @@
   <%= link_to 'Edit', edit_part_path(@part), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
   <%= link_to 'Back', @part.resource, class: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>
 </div>
+
+<h2 class="text-xl font-bold text-gray-900 mb-4">Tests</h2>
+
+<% @part.tests.each do |test| %>
+  <div class="mb-6 p-6 bg-white shadow-lg rounded-lg">
+    <h3 class="text-xl font-semibold text-gray-800 mb-2"><%= test.title %></h3>
+    <p class="text-gray-600 mb-2">Total Questions: <%= test.questions.count %></p>
+    
+    <% if test.attempts.exists?(user: current_user) %>
+      <% last_attempt = test.attempts.where(user: current_user).last %>
+      <% correct_answers = last_attempt.answers.select { |qid, answer| Question.find(qid).correct_answer.downcase.strip == answer.downcase.strip }.count %>
+      <p class="text-gray-600">Last Attempt Score: <span class="font-semibold text-gray-800"><%= correct_answers %> / <%= test.questions.count %></span></p>
+    <% else %>
+      <p class="text-gray-600">No attempts made yet.</p>
+    <% end %>
+
+    <%= link_to 'Take the Test', take_quiz_test_path(test), class: 'mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow focus:outline-none focus:shadow-outline' %>
+    <%= link_to 'Delete', test_path(test), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: 'mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow focus:outline-none focus:shadow-outline' %>
+
+  </div>
+<% end %>
+
+<%= link_to 'Add New Test', new_part_test_path(@part), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' %>

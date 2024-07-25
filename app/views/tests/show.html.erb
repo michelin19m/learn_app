@@ -1,6 +1,17 @@
-<h1>Test for Part: <%= @test.part.name %></h1>
+<h1 class="text-2xl font-bold text-gray-900 mb-4"><%= @test.title %></h1>
 
-<p>Scheduled At: <%= @test.scheduled_at %></p>
+<h2 class="text-xl font-bold text-gray-900 mb-4">Your Attempts</h2>
+<% @test.attempts.where(user: current_user).each_with_index do |attempt, index| %>
+  <div class="mb-4 p-4 bg-gray-100 rounded">
+    <h3 class="text-lg font-bold text-gray-900 mb-2">Attempt <%= index + 1 %>:</h3>
+    <% attempt.answers.each do |question_id, answer| %>
+      <% question = Question.find(question_id) %>
+      <p><strong>Q:</strong> <%= question.content %></p>
+      <p><strong>Your answer:</strong> <%= answer %></p>
+      <p><strong>Correct answer:</strong> <%= question.correct_answer %></p>
+      <hr class="my-2">
+    <% end %>
+  </div>
+<% end %>
 
-<%= link_to 'Edit', edit_test_path(@test), class: 'btn btn-secondary' %>
-<%= link_to 'Back', tests_path, class: 'btn btn-secondary' %>
+<%= link_to 'Back to Tests', part_tests_path(@test.part), class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>

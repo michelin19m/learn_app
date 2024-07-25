@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   resources :skills do
     resources :resources, except: [:index], shallow: true do
       resources :parts, except: [:index], shallow: true do
-        resources :tests, only: [:index, :show, :new, :create], shallow: true
+        resources :tests, only: [:index, :show, :new, :create, :destroy], shallow: true do
+          get 'take_quiz', on: :member, to: 'tests#take_quiz'
+          post 'submit_quiz', on: :member, to: 'tests#submit_quiz'
+          get 'quiz_results', on: :member, to: 'tests#quiz_results'
+        end
         post 'create_quiz', on: :member
       end
     end

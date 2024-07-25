@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :skills, dependent: :destroy
   has_many :tests, dependent: :destroy
+  has_many :attempts, dependent: :destroy
 end
