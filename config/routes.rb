@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :resources, except: [:index], shallow: true do
       resources :parts, except: [:index], shallow: true do
         resources :tests, only: [:index, :show, :new, :create], shallow: true
+        post 'create_quiz', on: :member
       end
     end
   end

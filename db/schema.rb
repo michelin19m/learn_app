@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_215204) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_022448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_215204) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["resource_id"], name: "index_parts_on_resource_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "test_id", null: false
+    t.string "content"
+    t.string "correct_answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_questions_on_test_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -61,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_215204) do
   end
 
   add_foreign_key "parts", "resources"
+  add_foreign_key "questions", "tests"
   add_foreign_key "resources", "skills"
   add_foreign_key "skills", "users"
   add_foreign_key "tests", "parts"
