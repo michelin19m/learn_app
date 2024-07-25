@@ -16,33 +16,16 @@ class TestsController < ApplicationController
   end
 
   def create
-    title = params[:title]
     csv_content = params[:csv_content]
 
-    if csv_content.blank?
-      redirect_to new_part_test_path(@part), alert: 'Please paste valid CSV content.'
-      return
+    service = CsvImportService.new(csv_content, @part, current_user)
+    result = service.call
+
+    if result[:success]
+      redirect_to resource_path(@part.resource), notice: 'Quiz was successfully created from the pasted CSV content.'
+    else
+      redirect_to new_part_test_path(@part), alert: result[:message]
     end
-
-    questions_and_answers = []
-    CSV.parse(csv_content, headers: true) do |row|
-      questions_and_answers << { question: row['question'], answer: row['answer'] }
-    end
-
-    if questions_and_answers.empty?
-      redirect_to new_part_test_path(@part), alert: 'The CSV content is empty or improperly formatted.'
-      return
-    end
-
-    # Create a new test
-    test = @part.tests.create(title: title, user: current_user)
-
-    # Add questions to the test
-    questions_and_answers.each do |qa|
-      test.questions.create(content: qa[:question], correct_answer: qa[:answer])
-    end
-
-    redirect_to resource_path(@part.resource), notice: 'Quiz was successfully created from the pasted CSV content.'
   end
 
   def destroy

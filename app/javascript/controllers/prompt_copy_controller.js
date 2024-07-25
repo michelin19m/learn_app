@@ -20,18 +20,23 @@ Resource: ${resource}
 Part: ${part}
 Test Title: ${title}
 
-Please generate a series of questions and their correct answers based on the above details. The questions should comprehensively cover key concepts, definitions, and essential knowledge areas related to the specified topic. 
+Please generate a series of multiple-choice questions with four answer options each. Ensure that there is only one correct answer per question.
 
-The output should be formatted as plain text suitable for CSV, with each question and answer separated by a comma. Ensure there are no additional commas in the question or answer texts. Use the following format:
+The output should be formatted as plain text suitable for CSV, with each question followed by four answer options and the correct answer clearly indicated. Use the following format:
 
-question,answer
-What is the capital of France?,Paris
-What is the chemical symbol for water?,H2O
-...
+question,answer1,answer2,answer3,answer4,correct_answer
 
-Please ensure the CSV content is correctly formatted and provides comprehensive coverage of the topic.
+**Important Formatting Guidelines**:
+1. **Avoid Commas and Quotation Marks**: Do not include commas or quotation marks in the questions or answers, as these can interfere with the CSV format.
+2. **Exact Match**: Ensure that the correct answer is an exact match to one of the provided answer options.
+3. **Use Plain Language**: Simplify complex terms or phrases that might require special characters.
 
-Thank you!`;
+Example:
+question,answer1,answer2,answer3,answer4,correct_answer
+What is the capital of France?,Paris,Berlin,Rome,Madrid,Paris
+What is the chemical symbol for water?,H2O,CO2,O2,H2,H2O
+
+Please ensure clarity and consistency in the output. Thank you!`;
 
     navigator.clipboard.writeText(prompt).then(() => {
       alert('Prompt copied to clipboard!');
